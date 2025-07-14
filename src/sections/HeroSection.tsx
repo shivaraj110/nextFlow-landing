@@ -1,34 +1,70 @@
-import { motion } from 'framer-motion'
+import { motion, useScroll, useTransform } from 'framer-motion'
 import { ArrowRight, Play } from 'lucide-react'
 import { Button } from '../components/ui/Button'
 import { SparklesCore } from '../components/ui/aceternity/SparklesEffect'
-
-const stats = [
-  { value: '99.9%', label: 'Uptime' },
-  { value: '150+', label: 'Integrations' },
-  { value: '2M+', label: 'Tasks Automated' },
-  { value: '10x', label: 'Faster Workflows' }
-]
-
-const companies = [
-  { name: 'TechCorp', employees: '5000+ employees' },
-  { name: 'InnovateLabs', employees: '1000+ employees' },
-  { name: 'FutureScale', employees: '2000+ employees' },
-  { name: 'GrowthTech', employees: '3000+ employees' }
-]
+import { useRef } from 'react'
 
 export const HeroSection = () => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { scrollY } = useScroll();
+  const parallaxY = useTransform(scrollY, [0, 500], [0, -150]);
+
   return (
-    <section className="relative min-h-screen pt-20 overflow-hidden font-sans">
-      <div className="absolute inset-0 flex flex-col">
-        {/* Sparkles Effect */}
+    <section ref={containerRef} className="relative min-h-screen pt-20 overflow-hidden">
+      {/* Background Effects */}
+      <div className="absolute inset-0">
+        {/* Sparkles Layer */}
         <SparklesCore
           background="transparent"
           minSize={0.4}
           maxSize={1}
-          particleDensity={100}
+          particleDensity={70}
           className="absolute inset-0"
           particleColor="rgba(255,255,255,0.3)"
+        />
+
+        {/* Gradient Orbs */}
+        <div className="absolute inset-0 overflow-hidden">
+          {/* Primary gradient orb */}
+          <motion.div
+            className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary-start/30 rounded-full blur-3xl"
+            animate={{
+              scale: [1, 1.2, 1],
+              opacity: [0.3, 0.2, 0.3],
+              x: [-10, 10, -10],
+              y: [-10, 10, -10],
+            }}
+            transition={{
+              duration: 8,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          />
+          
+          {/* Secondary gradient orb */}
+          <motion.div
+            className="absolute top-1/3 right-1/4 w-96 h-96 bg-primary-end/20 rounded-full blur-3xl"
+            animate={{
+              scale: [1, 1.1, 1],
+              opacity: [0.2, 0.3, 0.2],
+              x: [10, -10, 10],
+              y: [10, -10, 10],
+            }}
+            transition={{
+              duration: 10,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: 1,
+            }}
+          />
+        </div>
+
+        {/* Noise texture */}
+        <div 
+          className="absolute inset-0 opacity-[0.015]"
+          style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
+          }}
         />
       </div>
 
@@ -38,124 +74,144 @@ export const HeroSection = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="text-center rounded-3xl p-4 sm:p-6 lg:p-8 bg-gray-900/80 backdrop-blur-xl shadow-2xl border border-gray-800/50"
+          style={{ y: parallaxY }}
+          className="relative"
         >
-          <h1 className="relative">
-						<span className="block font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 text-white tracking-tight">
-							Automate Your Workflow with
-						</span>
-						<div className="relative inline-block mt-2">
-							{/* Glow effect */}
-							<div className="absolute -inset-4 bg-gradient-to-r from-primary-start to-primary-end opacity-75 blur-2xl" />
-							
-							{/* Main text */}
-							<span className="relative inline-block font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white via-white to-gray-200">
-								NexFlow
-							</span>              
-              {/* Animated gradient overlay */}
-              <div className="absolute inset-0 flex items-center justify-center">
-                <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary-start via-primary-end to-primary-start bg-[length:200%_auto] animate-gradient text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight">
-                  NexFlow
-                </span>
+          {/* Hero Content */}
+          <div className="text-center space-y-8 relative z-10">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2, duration: 0.8 }}
+              className="relative"
+            >
+              <motion.span 
+                className="block text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-4 text-white tracking-tight"
+                animate={{ 
+                  textShadow: [
+                    "0 0 20px rgba(52,144,220,0)",
+                    "0 0 50px rgba(52,144,220,0.3)",
+                    "0 0 20px rgba(52,144,220,0)",
+                  ]
+                }}
+                transition={{ duration: 3, repeat: Infinity }}
+              >
+                Automate Your Workflow with
+              </motion.span>
+
+              {/* Logo Text */}
+              <div className="relative inline-block mt-2">
+                <div className="absolute -inset-4 bg-gradient-to-r from-primary-start to-primary-end opacity-75 blur-2xl" />
+                <div className="relative">
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: 0.5, duration: 0.8 }}
+                  >
+                    <motion.span
+                      className="relative inline-block font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-primary-start via-white to-primary-end"
+                      animate={{
+                        backgroundPosition: ['0%', '100%', '0%'],
+                      }}
+                      transition={{
+                        duration: 8,
+                        repeat: Infinity,
+                        ease: 'linear',
+                      }}
+                      style={{
+                        backgroundSize: '200% auto',
+                      }}
+                    >
+                      NexFlow
+                    </motion.span>
+                  </motion.div>
+                </div>
               </div>
-            </div>
-          </h1>
-
-          <p className="mt-6 text-base sm:text-lg md:text-xl text-gray-400 max-w-3xl mx-auto">
-            Connect your tools, automate your tasks, and boost team productivity with
-            our intelligent workflow automation platform.
-          </p>
-
-          <div className="mt-8 sm:mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="w-full sm:w-auto"
-            >
-              <Button 
-                size="lg" 
-                className="w-full sm:w-auto shadow-lg shadow-primary-start/25 text-sm sm:text-base px-6 sm:px-8 py-3 sm:py-4"
-              >
-                Start Free Trial
-                <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
-              </Button>
             </motion.div>
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="w-full sm:w-auto"
-            >
-              <Button 
-                variant="secondary" 
-                size="lg" 
-                className="w-full sm:w-auto shadow-lg shadow-gray-900/50 text-sm sm:text-base px-6 sm:px-8 py-3 sm:py-4"
-              >
-                <Play className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
-                Watch Demo
-              </Button>
-            </motion.div>
-          </div>
 
-          {/* Stats */}
-          <div className="mt-12 sm:mt-16">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
-              {stats.map((stat, i) => (
+            {/* Description */}
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4, duration: 0.8 }}
+              className="text-base sm:text-lg md:text-xl text-gray-400 max-w-2xl mx-auto font-medium"
+            >
+              Connect your tools, automate your tasks, and boost team productivity with
+              our intelligent workflow automation platform.
+            </motion.p>
+
+            {/* CTA Buttons */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6, duration: 0.8 }}
+              className="flex flex-col sm:flex-row items-center justify-center gap-4"
+            >
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="w-full sm:w-auto"
+              >
+                <Button 
+                  size="lg" 
+                  className="w-full sm:w-auto shadow-lg shadow-primary-start/25 text-sm sm:text-base px-8 sm:px-10 py-4 relative group"
+                >
+                  <span className="relative z-10">Start Free Trial</span>
+                  <motion.div
+                    className="absolute inset-0 bg-gradient-to-r from-primary-start to-primary-end rounded-lg opacity-0 group-hover:opacity-100 transition-opacity"
+                    initial={false}
+                    animate={{ scale: [0.8, 1], opacity: [0, 1] }}
+                    transition={{ duration: 0.3 }}
+                  />
+                  <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5 relative z-10" />
+                </Button>
+              </motion.div>
+
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="w-full sm:w-auto"
+              >
+                <Button 
+                  variant="secondary" 
+                  size="lg" 
+                  className="w-full sm:w-auto shadow-lg shadow-gray-900/50 text-sm sm:text-base px-8 sm:px-10 py-4 group"
+                >
+                  <Play className="mr-2 h-4 w-4 sm:h-5 sm:w-5 group-hover:text-primary-start transition-colors" />
+                  <span className="group-hover:text-primary-start transition-colors">Watch Demo</span>
+                </Button>
+              </motion.div>
+            </motion.div>
+
+            {/* Stats */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.8, duration: 0.8 }}
+              className="pt-8 sm:pt-10 grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-8"
+            >
+              {[
+                { value: '10M+', label: 'Tasks Automated' },
+                { value: '99.9%', label: 'Uptime' },
+                { value: '150+', label: 'Integrations' },
+                { value: '5000+', label: 'Happy Teams' },
+              ].map((stat, i) => (
                 <motion.div
-                  key={i}
-                  className="relative p-4 rounded-xl bg-gray-800/50 backdrop-blur-sm border border-gray-700/50"
+                  key={stat.label}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.5 + i * 0.1 }}
+                  transition={{ delay: 0.8 + i * 0.1, duration: 0.5 }}
+                  className="relative group"
                 >
-                  <div className="absolute inset-0 bg-gradient-to-br from-primary-start/5 to-primary-end/5 rounded-xl" />
-                  <div className="relative">
-                    <div className="text-2xl sm:text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary-start to-primary-end mb-1">
+                  <div className="absolute inset-0 bg-gradient-to-r from-primary-start/10 to-primary-end/10 rounded-xl blur-xl group-hover:blur-2xl transition-all duration-300" />
+                  <div className="relative p-4 text-center">
+                    <div className="text-2xl sm:text-3xl font-bold font-display bg-clip-text text-transparent bg-gradient-to-r from-primary-start to-primary-end mb-1">
                       {stat.value}
                     </div>
                     <div className="text-xs sm:text-sm text-gray-400">{stat.label}</div>
                   </div>
                 </motion.div>
               ))}
-            </div>
-          </div>
-
-          {/* Social proof */}
-          <div className="mt-12 sm:mt-16">
-            <motion.div
-              className="relative rounded-2xl bg-gray-800/30 backdrop-blur-sm border border-gray-700/50 p-6 sm:p-8"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 1 }}
-            >
-              <div className="absolute inset-0 bg-gradient-to-br from-primary-start/5 to-primary-end/5 rounded-2xl" />
-              <motion.p 
-                className="relative text-sm text-gray-400 mb-6 sm:mb-8"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 1.2 }}
-              >
-                Trusted by leading companies worldwide
-              </motion.p>
-              <div className="relative grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8">
-                {companies.map((company, i) => (
-                  <motion.div
-                    key={company.name}
-                    className="text-center relative group"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 1 + i * 0.1 }}
-                    whileHover={{ scale: 1.05 }}
-                  >
-                    <div className="absolute inset-0 bg-gradient-to-r from-primary-start/10 to-primary-end/10 rounded-lg blur-md group-hover:blur-lg transition-all duration-300" />
-                    <div className="relative">
-                      <div className="text-lg sm:text-xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-gray-100 to-gray-400">
-                        {company.name}
-                      </div>
-                      <div className="text-xs sm:text-sm text-gray-500">{company.employees}</div>
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
             </motion.div>
           </div>
         </motion.div>
