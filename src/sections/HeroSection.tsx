@@ -122,7 +122,7 @@ export const HeroSection = () => {
 												backgroundSize: '200% auto',
 											}}
 										>
-											Flowy
+											Flowro
 										</motion.span>
 									</motion.div>
 								</div>

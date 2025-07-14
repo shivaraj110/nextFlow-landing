@@ -69,7 +69,7 @@ export const DemoSection = () => {
 								</span>
 							</h2>
 							<p className="text-base sm:text-lg text-gray-400 mb-6 sm:mb-8">
-								Flowy helps you automate repetitive tasks, connect your favorite tools,
+								Flowro helps you automate repetitive tasks, connect your favorite tools,
 								and streamline your workflow in minutes, not hours.
 							</p>
 

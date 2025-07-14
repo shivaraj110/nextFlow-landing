@@ -48,7 +48,7 @@ export const Navbar = () => {
 								scale: isScrolled ? 0.9 : 1,
 							}}
 						>
-							Flowy
+							Flowro
 						</motion.a>
 					</div>
 
