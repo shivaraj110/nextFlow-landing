@@ -86,7 +86,7 @@ export const PricingSection = () => {
 					</motion.p>
 
 					{/* Billing Toggle */}
-					<div className="relative inline-flex items-center justify-center gap-4 mb-12 p-2 rounded-full bg-gray-800/50 backdrop-blur-sm border border-gray-700/50">
+					<div className="relative inline-flex items-center justify-center gap-4 mb-12 p-2 px-3 rounded-full bg-gray-800/50 backdrop-blur-sm border border-gray-700/50">
 						<span className={`text-sm transition-colors duration-200 ${!isAnnual ? 'text-white' : 'text-gray-400'}`}>
 							Monthly
 						</span>
