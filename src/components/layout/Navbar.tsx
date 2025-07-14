@@ -26,8 +26,8 @@ export const Navbar = () => {
 		<motion.nav
 			className={cn(
 				"fixed top-0 left-0 right-0 z-50 transition-all duration-300",
-				isScrolled 
-					? "bg-gray-900/80 backdrop-blur-xl border-b border-gray-800/50" 
+				isScrolled
+					? "bg-gray-900/80 backdrop-blur-xl border-b border-gray-800/50"
 					: "bg-transparent"
 			)}
 			animate={{
@@ -48,7 +48,7 @@ export const Navbar = () => {
 								scale: isScrolled ? 0.9 : 1,
 							}}
 						>
-							NexFlow
+							Flowy
 						</motion.a>
 					</div>
 

@@ -148,7 +148,7 @@ export const Footer = () => {
 						</div>
 
 						<p className="text-gray-400 text-sm">
-							© {new Date().getFullYear()} NexFlow. All rights reserved.
+							© {new Date().getFullYear()} Flowy. All rights reserved.
 						</p>
 					</div>
 				</div>
